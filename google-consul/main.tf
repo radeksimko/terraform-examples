@@ -40,13 +40,13 @@ resource "google_compute_instance" "consul" {
 
     metadata {
         startup-script = <<SCRIPT
-${file("${path.root}/scripts/install-deps.sh")}
+${file("${path.module}/scripts/install-deps.sh")}
 SERVER_COUNT="${var.servers}"
 INSTANCE_MASK="tf-consul-.*"
-${file("${path.root}/scripts/get-metadata-gce.sh")}
-${file("${path.root}/scripts/startup.sh")}
+${file("${path.module}/scripts/get-metadata-gce.sh")}
+${file("${path.module}/scripts/startup.sh")}
 SCRIPT
-        shutdown-script = "${file("${path.root}/scripts/shutdown.sh")}"
+        shutdown-script = "${file("${path.module}/scripts/shutdown.sh")}"
     }
 
     service_account {
@@ -74,9 +74,9 @@ resource "google_compute_instance" "consul_web_ui" {
     metadata {
         datacentreName = "gce-${var.region_zone}"
         startup-script = <<SCRIPT
-${file("${path.root}/scripts/install-deps.sh")}
-${file("${path.root}/scripts/get-metadata-gce.sh")}
-${file("${path.root}/scripts/ui-startup.sh")}
+${file("${path.module}/scripts/install-deps.sh")}
+${file("${path.module}/scripts/get-metadata-gce.sh")}
+${file("${path.module}/scripts/ui-startup.sh")}
 SCRIPT
     }
 
